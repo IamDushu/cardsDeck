@@ -3,15 +3,6 @@ package main
 import "fmt"
 
 func main() {
-	// cards := newDeck()
-
-	// hand, remainingDeck := deal(cards, 3)
-
-	// hand.print()
-	// remainingDeck.print()
-
-	greeting := "Hi there!"
-
-	fmt.Println([]byte(greeting))
-	//[72 105 32 116 104 101 114 101 33]
+	cards := newDeck()
+	fmt.Println(cards.toString())
 }
