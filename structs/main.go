@@ -6,19 +6,23 @@ import "fmt"
 type person struct {
 	firstName string
 	lastName  string
+	contact   contactInfo
+}
+
+type contactInfo struct {
+	email   string
+	zipCode int
 }
 
 func main() {
-	// 2. Create new value of type person
-	// dushu := person{firstName: "Dushyanth", lastName: "Gali"}
-	//or
-	// dushu := person{"Dushyanth", "Gali"}
+	jim := person{
+		firstName: "Jim",
+		lastName:  "Party",
+		contact: contactInfo{
+			email:   "jim@gmail.com",
+			zipCode: 517501,
+		},
+	}
 
-	var dushu person
-
-	dushu.firstName = "Dushyanth"
-	dushu.lastName = "Gali"
-
-	fmt.Println(dushu)
-	fmt.Printf("%+v", dushu)
+	fmt.Printf("%+v", jim)
 }
