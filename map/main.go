@@ -4,24 +4,21 @@ import "fmt"
 
 func main() {
 
-	//Different ways of initializing map
+	colors := map[string]string{
+		"red":   "#ff0000",
+		"white": "#ffffff",
+		"green": "#4bf745",
+	}
 
-	// var colors map[string]string
+	printMap(colors)
+	//Hex code for red is #ff0000
+	//Hex code for white is #ffffff
+	//Hex code for green is #4bf745
 
-	colors := make(map[string]string)
+}
 
-	// colors := map[string]string{
-	// 	"red":   "#ff0000",
-	// 	"white": "#ffffff",
-	// }
-
-	colors["white"] = "#ffffff"
-	colors["black"] = "#000000"
-
-	fmt.Println(colors["black"]) //Use square braces to access a value
-
-	delete(colors, "black")
-
-	fmt.Println(colors)
-
+func printMap(c map[string]string) {
+	for color, hex := range c {
+		fmt.Println("Hex code for", color, "is", hex)
+	}
 }
