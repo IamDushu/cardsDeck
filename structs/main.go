@@ -24,8 +24,9 @@ func main() {
 		},
 	}
 
-	jim.updateName("Jimmy")
-	jim.print() //---> still show jim as firstname, why?
+	jimPointer := &jim
+	jimPointer.updateName("jimmy")
+	jim.print()
 
 }
 
@@ -33,6 +34,6 @@ func (p person) print() {
 	fmt.Printf("%+v", p)
 }
 
-func (p person) updateName(newFirstName string) {
-	p.firstName = newFirstName
+func (pointerToPerson *person) updateName(newFirstName string) {
+	(*pointerToPerson).firstName = newFirstName
 }
