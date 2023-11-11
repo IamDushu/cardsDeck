@@ -4,9 +4,9 @@ import "fmt"
 
 // 1. define struct
 type person struct {
-	firstName string
-	lastName  string
-	contact   contactInfo
+	firstName   string
+	lastName    string
+	contactInfo //-----> same as contactInfo contactInfo
 }
 
 type contactInfo struct {
@@ -18,11 +18,21 @@ func main() {
 	jim := person{
 		firstName: "Jim",
 		lastName:  "Party",
-		contact: contactInfo{
+		contactInfo: contactInfo{
 			email:   "jim@gmail.com",
 			zipCode: 517501,
 		},
 	}
 
-	fmt.Printf("%+v", jim)
+	jim.updateName("Jimmy")
+	jim.print() //---> still show jim as firstname, why?
+
+}
+
+func (p person) print() {
+	fmt.Printf("%+v", p)
+}
+
+func (p person) updateName(newFirstName string) {
+	p.firstName = newFirstName
 }
