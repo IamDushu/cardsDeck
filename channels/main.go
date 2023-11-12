@@ -20,8 +20,8 @@ func main() {
 		go checkLink(link, c)
 	}
 
-	for i := 0; i < len(links); i++ {
-		fmt.Println(<-c) //The for loop waits here until message is received from channel
+	for { //This is an infinite loop
+		go checkLink(<-c, c) //Blocking operation
 	}
 }
 
@@ -30,9 +30,9 @@ func checkLink(link string, c chan string) {
 
 	if err != nil {
 		fmt.Println(link, "might be down!")
-		c <- "Might be down I think"
+		c <- link
 		return
 	}
 	fmt.Println(link, "is live!")
-	c <- "Yep it's Up"
+	c <- link //here link is also a string "http://"
 }
