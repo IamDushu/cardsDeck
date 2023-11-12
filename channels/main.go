@@ -20,8 +20,8 @@ func main() {
 		go checkLink(link, c)
 	}
 
-	for { //This is an infinite loop
-		go checkLink(<-c, c) //Blocking operation
+	for l := range c { //wait for channel to return some msg; then assign to l
+		go checkLink(l, c) //Blocking operation
 	}
 }
 
