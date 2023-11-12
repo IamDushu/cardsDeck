@@ -20,15 +20,9 @@ func main() {
 		go checkLink(link, c)
 	}
 
-	fmt.Println(<-c)
-	fmt.Println(<-c)
-
-	//Output
-	// 	http://google.com is live!
-	// Yep it's Up
-	// http://facebook.com is live!
-	// Yep it's Up
-
+	for i := 0; i < len(links); i++ {
+		fmt.Println(<-c) //The for loop waits here until message is received from channel
+	}
 }
 
 func checkLink(link string, c chan string) {
