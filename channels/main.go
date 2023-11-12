@@ -14,17 +14,26 @@ func main() {
 		"http://amazon.com",
 	}
 
+	c := make(chan string)
+
 	for _, link := range links {
-		checkLink(link)
+		go checkLink(link, c)
 	}
+
+	fmt.Println(<-c)
+	//Output is just
+	// 	http://google.com is live!
+	//  Yep it's Up
 }
 
-func checkLink(link string) {
-	_, err := http.Get(link) //Blocking call!
+func checkLink(link string, c chan string) {
+	_, err := http.Get(link)
 
 	if err != nil {
-		fmt.Println(link, "is down!")
+		fmt.Println(link, "might be down!")
+		c <- "Might be down I think"
 		return
 	}
 	fmt.Println(link, "is live!")
+	c <- "Yep it's Up"
 }
