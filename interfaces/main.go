@@ -2,6 +2,11 @@ package main
 
 import "fmt"
 
+// Any Type which implements this getGreeting() string; is now an honary member of this interface type bot
+type bot interface {
+	getGreeting() string
+}
+
 type englishBot struct{}
 type teluguBot struct{}
 
@@ -25,11 +30,6 @@ func (teluguBot) getGreeting() string { //-----> if we are not using the recieve
 	return "Namaskaram _/\\_"
 }
 
-// The below 2 functions have same logic :- Lets make it DRY so it works with both bots - INTERFACES!
-func printGreeting(eb englishBot) {
-	fmt.Println(eb.getGreeting())
-}
-
-func printGreeting(tb teluguBot) {
-	fmt.Println(tb.getGreeting())
+func printGreeting(b bot) {
+	fmt.Println(b.getGreeting())
 }
