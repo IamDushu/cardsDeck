@@ -21,9 +21,14 @@ func main() {
 	}
 
 	fmt.Println(<-c)
-	//Output is just
+	fmt.Println(<-c)
+
+	//Output
 	// 	http://google.com is live!
-	//  Yep it's Up
+	// Yep it's Up
+	// http://facebook.com is live!
+	// Yep it's Up
+
 }
 
 func checkLink(link string, c chan string) {
