@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 )
@@ -14,11 +15,11 @@ func main() {
 		os.Exit(1)
 	}
 
-	// var data []byte --> Refer notes; Try doing with this
-	data := make([]byte, 99999)
+	io.Copy(os.Stdout, resp.Body)
 
-	dataRead, _ := resp.Body.Read(data)
-
-	fmt.Println(string(data)) //----> if we just write Println(data) it just prints a slice.
-	fmt.Println(dataRead)     //------> no. of bytes read by read func
+	// // var data []byte --> Refer notes; Try doing with this
+	// data := make([]byte, 99999)
+	// dataRead, _ := resp.Body.Read(data)
+	// fmt.Println(string(data)) //----> if we just write Println(data) it just prints a slice.
+	// fmt.Println(dataRead)     //------> no. of bytes read by read func
 }
