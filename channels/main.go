@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"time"
 )
 
 func main() {
@@ -20,8 +21,59 @@ func main() {
 		go checkLink(link, c)
 	}
 
-	for l := range c { //wait for channel to return some msg; then assign to l
-		go checkLink(l, c) //Blocking operation
+	//After creating go routines for all above links;
+	//The Main Go Routine waits here for a message from channel
+	// fmt.Println(<-c)
+
+	// for i := 0; i < len(links); i++ {
+	// 	fmt.Println(<-c) //Blocks the for loop from continuing on until receives a messsage from channel
+	// }
+
+	//Repeating Routines
+	// for {
+	// 	go checkLink(<-c, c) //Though it's infinite for loop; the loop gets blocked here as we're waiting for <-c
+	// }
+
+	//For other devs, the above code syntax might be confusing, so alt syntax
+	//Here we are using range with channel -> wait for channel to return some value
+	//After it has returned assign to value l; then run the body of for loop
+	// for l := range c {
+	// 	go checkLink(l, c)
+	// }
+
+	//Sleeping Go Routines
+	// for l := range c {
+	// 	time.Sleep(5 * time.Second) //:( This will pause the Main Routine for 5 secs and the messages in channel get throttled from other go routines
+	// 	go checkLink(l, c)
+	// }
+
+	// for l := range c {
+	// 	go func() { //Function Literal or Anonymous Function
+	// 		time.Sleep(5 * time.Second)
+	// 		checkLink(l, c) //Warning: loop variable l captured by func literal
+	// 		//OUTPUT
+	// 		// http://google.com is live!
+	// 		// http://stackoverflow.com is live!
+	// 		// http://facebook.com is live!
+	// 		// http://golang.org is live!
+	// 		// http://amazon.com is live!
+	// 		// http://amazon.com is live!
+	// 		// http://amazon.com is live!
+	// 		// http://amazon.com is live!
+	// 		// http://amazon.com is live!
+	// 		// http://amazon.com is live!
+	// 		// http://amazon.com is live!
+	// 		// http://amazon.com is live!
+	// 		//Looks like l variable is receiving only amazon.com after 1st five requests
+	//    // Concept of Closures
+	// 	}()
+	// }
+
+	for l := range c {
+		go func(link string) { //To avoid the effects we saw above
+			time.Sleep(5 * time.Second)
+			checkLink(link, c)
+		}(l)
 	}
 }
 
